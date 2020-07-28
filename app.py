@@ -1,6 +1,9 @@
 import streamlit as st
-from script import *
+from gotLibrary import gotLib
+from emotions import emotions
 import plotly.express as px
+import pandas as pd 
+import matplotlib.pyplot as plt
 
 class plot_type:
     def __init__(self,data):
@@ -73,6 +76,9 @@ def title(text,size,color):
 def header(text):
     st.markdown(f"<p style='color:white;'>{text}</p>",unsafe_allow_html=True)
 
+
+
+
 @st.cache(persist=True,suppress_st_warning=True)
 def load_data():
     df = pd.read_csv('final_data.csv')
@@ -80,11 +86,17 @@ def load_data():
     return df
 
 
+df = load_data()
+
+emo = emotions()
+got = gotLib(emo,df)
+
+
 
 with open("styles/style.css") as f:
     st.markdown(f'<style>{f.read()}</style>',unsafe_allow_html=True)
 
-df = load_data()
+
 #-------------------------------Header-----------------------
 
 st.markdown('<h1 style="text-align:center;color:white;font-weight:bolder;font-size:100px;background: -webkit-linear-gradient(#e20b0b,#ec720e,#46a3e0,#093ff0); -webkit-background-clip: text;-webkit-text-fill-color: transparent;">GAME<br>OF<br>THRONES</h1>',unsafe_allow_html=True)
@@ -105,7 +117,7 @@ option_1_s = st.selectbox('',[1,2,3,4,5,6,7,8])
 header("number of results")
 num = st.slider("",4,50)
 
-temp_data = show_top_by_season(df,option_1_s)
+temp_data = got.show_top_by_season(option_1_s)
 number=10
 
 bar1 = plot_type(temp_data[-num:])
@@ -122,7 +134,7 @@ header("number of results")
 
 num1 = st.slider("",5,60)
 
-temp_data1 =get_overall_top(df)
+temp_data1 = got.get_overall_top()
 
 bar2 = plot_type(temp_data1[-num1:])
 bar2.bar("words","character","words")
@@ -134,12 +146,12 @@ bar2.plot()
 title("Evolution of a character's number of dialogues over the seasons",60,"white")
 st.markdown('#### showing only top 100 characters as there are more than 500+ it would be awkward to display it all')
 
-characters = get_data_seasons(df)
+characters = got.get_data_seasons()
 stb1 = select_box(characters)
 stb1.place("character",0)
 @st.cache(persist=True)
 def sbyc(df,stb1):
-    return show_bar_by_character_allSeason(df,stb1)
+    return got.show_bar_by_character_allSeason(stb1)
 
 t_data = sbyc(df,stb1.value)
 
@@ -157,7 +169,7 @@ st.write("what is the character's distribution of his/her/(uhh. you know the res
 
 stb2 = select_box(characters)
 stb2.place("character",9)
-t_data1 = cal_importance(df,stb2.value)
+t_data1 = got.cal_importance(stb2.value)
 
 pie2 = plot_type(t_data1)
 pie2.pie("imp","season")
@@ -177,7 +189,7 @@ select_box1.place('character',1)
 header("range")
 num2 = slide_bar("",5,55)
 num2.set()
-temp_data2,size = get_most_spokenwords_by_character(df,select_box1.value,num2.value)
+temp_data2,size = got.get_most_spokenwords_by_character(select_box1.value,num2.value)
 
 
 bar3 = plot_type(temp_data2)
@@ -198,7 +210,7 @@ sl = slide_bar('',50,200)
 sl.set()
 @st.cache(persist=True,suppress_st_warning=True)
 def swc(df,v1,v2):
-    return show_word_cloud(df,v1,v2)
+    return got.show_word_cloud(v1,v2)
 wc = swc(df,sl.value,select_box2.value)
 plt.figure(figsize=(10,10))
 plt.imshow(wc,interpolation="bilinear")
@@ -215,7 +227,7 @@ st.write('Note: This is purely my calculations based on the text-corpus I create
 select_box3 = select_box(characters)
 select_box3.place('character',3)
 
-temp_data3 = cal_character(df,select_box3.value)
+temp_data3 = got.cal_character(select_box3.value)
 
 # bar4 = plot_type(temp_data3['data'])
 # bar4.bar(temp_data3['x'],temp_data3['y'],temp_data3['color'])
@@ -232,7 +244,7 @@ title("Most used name by a character",60,"white")
 
 stb = select_box(characters[:50])
 stb.place("character",4)
-temp_df = most_name(df,stb.value)
+temp_df = got.most_name(stb.value)
 num_range = temp_df.shape[0]
 rangesl = slide_bar("",1,num_range)
 rangesl.set()
@@ -241,14 +253,6 @@ bar5 = plot_type(temp_df.iloc[-rangesl.value:,:])
 bar5.bar("number","name","number")
 bar5.set_title(stb.value)
 bar5.plot()
-
-
-
-
-
-
-
-
 
 
 
@@ -267,7 +271,7 @@ ch2.place('character 2',6)
 val1 = ch2.value
 
 print(val,val1)
-val = how_similar(df,val,val1)
+val = got.how_similar(val,val1)
 
 
 st.markdown(f"<h1 style='text-align:center;'>The similarity score is <span style='font-weight:bolder;color:rgb(0,255,42);font-size:100px;'>{str(val)[:5]}</span></h1>",unsafe_allow_html=True)
@@ -299,3 +303,8 @@ st.write('')
 
 st.markdown('<h3 style="text-align:center;">Made By <span style="color:#4f9bce;font-weight:bolder;font-size:40px;">Mario 😎</span></h3>',unsafe_allow_html=True)
 st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a href="https://github.com/Mario-Vishal">GitHub</a></h2>',unsafe_allow_html=True)
+
+
+
+
+
