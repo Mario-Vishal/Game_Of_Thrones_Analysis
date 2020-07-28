@@ -150,7 +150,7 @@ bar0.set_title_x(stb1.value)
 
 bar0.plot()
 
-#------------------------Module 4----------------------------------
+#----------------------Module 4----------------------------------
 
 title("Percentage of a character's performance in seasons",60,"white")
 st.write("what is the character's distribution of his/her/(uhh. you know the rest) dialogue percentage over the seasons")
