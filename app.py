@@ -216,6 +216,7 @@ plt.figure(figsize=(10,10))
 plt.imshow(wc,interpolation="bilinear")
 plt.axis('off')
 plt.title(select_box2.value,fontsize=18)
+plt.tight_layout()
 st.pyplot()
 
 #--------------------------Module 4------------------------------

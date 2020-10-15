@@ -8,6 +8,8 @@ from wordcloud import WordCloud,STOPWORDS
 from nltk.corpus import stopwords
 from collections import Counter
 from nltk import tokenize,FreqDist
+from nltk import RegexpTokenizer
+from nltk import PorterStemmer
 import nltk
 from corpus import *
 
@@ -29,11 +31,6 @@ class gotLib:
     def copy(self):
             return self.data.copy()
 
-    # def get_character_by_season(self,season):
-    #         df =self.copy()
-    #         df = df[df.season==season]
-    #         df=df.groupby(['character'])['dialogue'].apply(lambda x:' '.join(x)).reset_index()
-    #         return list(df.character)
 
     def get_overall_top_sort(self):
             df=self.copy()
@@ -148,8 +145,7 @@ class gotLib:
             '''
             returns a list of words which are processed like tokenizing,removing stopwords
             '''
-            from nltk import RegexpTokenizer
-            from nltk import PorterStemmer
+
             tokenizer = RegexpTokenizer(r"\w+")
             txt = re.sub("'s|'ve|'re|'t|'ll","",txt)
             new_words = tokenizer.tokenize(txt)
