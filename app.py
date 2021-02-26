@@ -1,6 +1,5 @@
 import streamlit as st
-from gotLibrary import gotLib
-from emotions import emotions
+from gotLibrary import GotLib
 import plotly.express as px
 import pandas as pd 
 import matplotlib.pyplot as plt
@@ -85,11 +84,11 @@ def load_data():
     df = df.iloc[:,1:]
     return df
 
-
+#loading the data
 df = load_data()
 
-emo = emotions()
-got = gotLib(emo,df)
+#intializing the GotLib object
+got = GotLib(df)
 
 
 
@@ -143,8 +142,8 @@ bar2.plot()
 
 #------------------------Module 3-----------------------------
 
-title("Evolution of a character's number of dialogues over the seasons",60,"white")
-st.markdown('#### showing only top 100 characters as there are more than 500+ it would be awkward to display it all')
+title("Character's number of dialogues over the seasons",60,"white")
+st.markdown('### NOTE: displaying only top 100 characters in drop downs as there are more than 500+ it would be awkward to display it all :)')
 
 characters = got.get_data_seasons()
 stb1 = select_box(characters)
@@ -199,7 +198,7 @@ bar3.plot()
 
 #--------------------------WORD_CLOUD---------------------------
 
-title("WordCloud of a character",70,'white')
+title("WordCloud of a character",60,'white')
 
 
 select_box2 = select_box(characters)
@@ -212,36 +211,30 @@ sl.set()
 def swc(df,v1,v2):
     return got.show_word_cloud(v1,v2)
 wc = swc(df,sl.value,select_box2.value)
-plt.figure(figsize=(10,10))
+fig = plt.figure(figsize=(8,8))
 plt.imshow(wc,interpolation="bilinear")
 plt.axis('off')
 plt.title(select_box2.value,fontsize=18)
 plt.tight_layout()
-st.pyplot()
+st.pyplot(fig)
 
 #--------------------------Module 4------------------------------
 
-title("Emotional characteristics",80,"white")
-st.write("The below bar graph tells you the distribution of emotions of a character.")
+title("Emotional characteristics",70,"white")
+st.write("The below pie chart depicts the distribution of emotions of a character.")
 st.write('Note: This is purely my calculations based on the text-corpus I created and also based on the words used by a character.')
 
 select_box3 = select_box(characters)
 select_box3.place('character',3)
 
 temp_data3 = got.cal_character(select_box3.value)
-
-# bar4 = plot_type(temp_data3['data'])
-# bar4.bar(temp_data3['x'],temp_data3['y'],temp_data3['color'])
-# bar4.set_title(select_box3.value)
-# bar4.plot()
-
 pie1 = plot_type(temp_data3['data'])
 pie1.pie(temp_data3['y'],temp_data3['x'])
 pie1.set_title_pie(select_box3.value)
 pie1.plot()
 
 #---------------------------Module 5--------------------------
-title("Most used name by a character",60,"white")
+title("Most used name by a character",50,"white")
 
 stb = select_box(characters[:50])
 stb.place("character",4)
@@ -259,39 +252,32 @@ bar5.plot()
 
 #----------------------Module 6----------------------------------
 
-title('How Similar?',100,'white')
-st.write('how similar are two characters this is done by converting a character\'s dialgoue into one big feature vector and using jaccard similarity between two vectors')
-
+title('Similar Characters',60,'white')
+st.write('The chart shows the similar characters of a character, based on their similarity of usage of words this same alogrithm is also used in movie recommender systems')
+st.write('Note: This is very much experimental and purely based on the scripts. And only depends on script text and nothing else.')
 ch=characters[:]
 ch1 = select_box(ch)
-ch1.place('character 1',5)
+ch1.place('character',5)
 val=ch1.value
 
-ch2 = select_box(characters)
-ch2.place('character 2',6)
-val1 = ch2.value
 
-print(val,val1)
-val = got.how_similar(val,val1)
+results = got.get_similar_character(val)
 
-
-st.markdown(f"<h1 style='text-align:center;'>The similarity score is <span style='font-weight:bolder;color:rgb(0,255,42);font-size:100px;'>{str(val)[:5]}</span></h1>",unsafe_allow_html=True)
-
-
-
-
+colors = ['rgb(0,255,42)','rgb(221, 235, 30)','rgb(224, 91, 43)']
+char = list(results['character'])
+score = list(results['similarity'])
+i=0
+for name,sc in zip(char,score):
+    
+    st.markdown(f"<h3 style='text-align:center;color:rgb(196, 196, 196);'><span style='font-weight:bolder;color:{colors[i]};font-size:50px;'>{name} </span> [{sc}%]</h3>",unsafe_allow_html=True)
+    i+=1
 
 
-
-
-
-
-
-
+#----------------------------------------------------------------------THE END---------------------------------------------------------------------
 
 st.write(' ')
 
-st.markdown('#### The dataset here is created from the scripts, involved a lot of data cleaning,wrangling and pre-processing!. Took a lot of time to prepare it!.')
+st.markdown('#### The dataset here is created from the scripts, involved a lot of data cleaning,wrangling and pre-processing!. Took a lot of time to prepare it!. And is 85% accurate.')
 
 st.write('check the box below to peak at the dataset')
 if st.checkbox('',False):

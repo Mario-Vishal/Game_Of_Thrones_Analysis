@@ -11,14 +11,18 @@ from nltk import tokenize,FreqDist
 from nltk import RegexpTokenizer
 from nltk import PorterStemmer
 import nltk
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import CountVectorizer
 from corpus import *
+from emotions import emotions
 
 
 
-class gotLib:
-    def __init__(self,emotions,data):
+class GotLib(emotions):
+    def __init__(self,data):
         self.data=data
-        self.e = emotions
+        self.e = emotions()
+        self.similarity_scores = np.array([])
         
     def load_data(self):
         self.data = pd.read_csv('final_data.csv')
@@ -73,7 +77,8 @@ class gotLib:
                 df = self.data_sort(df)
                 return df
             except:
-                print("Invalid season number or record number")
+                # print("Invalid season number or record number")
+                return 
 
 
     def get_data_all_seasons(self):
@@ -209,22 +214,65 @@ class gotLib:
             total = sum(score.values())
             percentage = [float(str(value/total)[:4]) for value in score.values()]
 
-            data = pd.DataFrame({'emotion':['happy','aggressive','caring','fear'],
+            data = pd.DataFrame({'emotion':['happy','anger','caring','fear'],
                                      'percentage':percentage})
 
             return {'data':data,'x':'emotion','y':'percentage','color':'percentage'}
 
-    def how_similar(self,c1,c2):
+    
+    def __get_index_of_character(self,c):
             '''
-            returns a similarity score of two characters
+            returns the index of a character in the database
             '''
-            c1 = self.get_text_of_character(c1)
-            c2 = self.get_text_of_character(c2)
-            c1 = set(self.preprocess_text(c1))
-            c2 = set(self.preprocess_text(c2))
 
-            inter_val = c1.intersection(c2)
-            return 100*float(len(inter_val))/(len(c1)+len(c2)-len(inter_val))
+            data = self.grouby_character()
+            index = data.index[data['character']==c].tolist()
+            if len(index):
+                    return index[0]
+            else:
+                    return -1
+
+    def __get_character_by_index(self,index):
+            '''
+            returns the character name by the index value
+            '''
+            data = self.grouby_character()
+            return data.iloc[index]['character']
+
+    def __load_similarity_scores(self):
+            '''
+            returns similarity scores of numpy array
+            '''
+            data = self.grouby_character()
+            cv = CountVectorizer()
+            count_matrix = cv.fit_transform(data['dialogue'])
+            self.similarity_scores = cosine_similarity(count_matrix)
+
+
+    def get_similar_character(self,c):
+            '''
+            returns the similar characters corresponding to the input character value.
+            '''
+
+            self.__load_similarity_scores()
+
+            index = self.__get_index_of_character(c)
+            if index==-1:
+                    return 
+            similar_characters = list(enumerate(self.similarity_scores[index]))
+            similar_characters = sorted(similar_characters,key=lambda x:x[1],reverse=True)
+            similar_characters = similar_characters[1:4]
+            results = {'character':[],'similarity':[]}
+
+            for res in similar_characters:
+                    value = self.__get_character_by_index(res[0])
+                    score = round(res[1]*100,2)
+                    results['character'].append(value)
+                    results['similarity'].append(score)
+
+            temp = pd.DataFrame.from_dict(results)
+            return temp
+
 
     def most_name(self,ch):
             '''
@@ -280,4 +328,8 @@ class gotLib:
         temp['imp']=100*temp['importance']/total
         temp['season']=temp['season'].apply(lambda x: "season "+str(x))
         return temp[['season','imp']]
+
+
+
+
     
