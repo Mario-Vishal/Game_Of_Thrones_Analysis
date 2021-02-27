@@ -290,7 +290,7 @@ st.write('')
 
 st.markdown('<h3 style="text-align:center;">Made By <span style="color:#4f9bce;font-weight:bolder;font-size:40px;">Mario 😎</span></h3>',unsafe_allow_html=True)
 st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a style="text-decoration:none;color:rgb(96, 235, 133);" href="https://github.com/Mario-Vishal">-> GitHub <-</a></h2>',unsafe_allow_html=True)
-st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a style="text-decoration:none;color:rgb(20, 166, 219);" href="www.linkedin.com/in/mario-vishal">-> Linkedin <-</a></h2>',unsafe_allow_html=True)
+st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a style="text-decoration:none;color:rgb(20, 166, 219);" href="https://www.linkedin.com/in/mario-vishal">-> Linkedin <-</a></h2>',unsafe_allow_html=True)
 st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a style="text-decoration:none;color:red;" href="mailto:mariovishal12@gmail.com">-> Contact Me <-</a></h2>',unsafe_allow_html=True)
 
 
