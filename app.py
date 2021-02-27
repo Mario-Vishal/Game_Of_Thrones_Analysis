@@ -168,7 +168,7 @@ st.write("what is the character's distribution of his/her/(uhh. you know the res
 
 stb2 = select_box(characters)
 stb2.place("character",9)
-t_data1 = got.cal_importance(stb2.value)
+t_data1 = got.cal_importance(df,stb2.value)
 
 pie2 = plot_type(t_data1)
 pie2.pie("imp","season")
@@ -188,7 +188,7 @@ select_box1.place('character',1)
 header("range")
 num2 = slide_bar("",5,55)
 num2.set()
-temp_data2,size = got.get_most_spokenwords_by_character(select_box1.value,num2.value)
+temp_data2,size = got.get_most_spokenwords_by_character(df,select_box1.value,num2.value)
 
 
 bar3 = plot_type(temp_data2)
@@ -199,7 +199,7 @@ bar3.plot()
 #--------------------------WORD_CLOUD---------------------------
 
 title("WordCloud of a character",60,'white')
-
+st.markdown('#### It may take a few seconds to load the result, so please hold on to your dragons.')
 
 select_box2 = select_box(characters)
 select_box2.place('character',2)
@@ -209,7 +209,7 @@ sl = slide_bar('',50,200)
 sl.set()
 @st.cache(persist=True,suppress_st_warning=True)
 def swc(df,v1,v2):
-    return got.show_word_cloud(v1,v2)
+    return got.show_word_cloud(df,v1,v2)
 wc = swc(df,sl.value,select_box2.value)
 fig = plt.figure(figsize=(8,8))
 plt.imshow(wc,interpolation="bilinear")
@@ -253,7 +253,7 @@ bar5.plot()
 #----------------------Module 6----------------------------------
 
 title('Similar Characters',60,'white')
-st.write('The chart shows characters who are similar to a character with their similarity precentage, based on their similar of usage of words this same alogrithm is also used in movie recommender systems.')
+st.write('The chart shows characters who are similar to a character with their similarity precentage, based on their similar usage of words, this same alogrithm is also used in movie recommender systems.')
 st.write('Note: This is very much experimental and purely based on the scripts. And only depends on script text and nothing else.')
 ch=characters[:]
 ch1 = select_box(ch)

@@ -43,8 +43,8 @@ class GotLib(emotions):
             df =df.sort_values(by='words',ascending=False)
             return df
 
-    def show_word_cloud(self,length,character):
-            s_d = self.copy()
+    def show_word_cloud(self,data,length,character):
+            s_d = data.copy()
             throne_mask = Image.open('images/throne1.png')
             throne_mask = ImageOps.grayscale(throne_mask)
             throne_mask = np.array(throne_mask)
@@ -126,12 +126,12 @@ class GotLib(emotions):
             txt = temp_data.dialogue[0]
             return txt
 
-    def get_most_spokenwords_by_character(self,character,number):
+    def get_most_spokenwords_by_character(self,data,character,number):
             '''
             returns a Data Frame containing words and frequency of that character,
             and the length of the entire dialogue of that character
             '''
-            df = self.copy()
+            df = data.copy()
             txt= self.get_text_of_character(character)
             txt = self.preprocess_text(txt)
             freq = FreqDist(txt)
@@ -311,14 +311,15 @@ class GotLib(emotions):
         temp.reset_index(inplace=True)
         return list(temp.total_words_spoken)
 
-    def cal_importance(self,ch):
+    def cal_importance(self,data,ch):
         
         '''
         Returns a Data Frame of 2 columns "season","imp" where the imp column
         contains the importance value of that character respective to that season
         
         '''
-        df = self.copy()
+        # df = self.copy()
+        df = data.copy()
         l=self.total_words_season()
         temp = self.show_bar_by_character_allSeason(ch).groupby(['season']).sum()
         temp.reset_index(inplace=True)
