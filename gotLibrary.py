@@ -5,7 +5,7 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 from PIL import Image,ImageOps
 from wordcloud import WordCloud,STOPWORDS
-from nltk.corpus import stopwords
+# from nltk.corpus import stopwords
 from collections import Counter
 from nltk import tokenize,FreqDist
 from nltk import RegexpTokenizer
@@ -51,7 +51,7 @@ class GotLib(emotions):
             txt = self.get_text_of_character(character)
             stop_words_v1 = ['s','ve','ll','m','re','t','d','a','i','l','know','could','would']
 
-            stop_words=list(set(stopwords.words("english")))+stop_words_v1
+            stop_words=list(set(self.e.stopWords()))+stop_words_v1
 
             wc = WordCloud(background_color="black",mask=throne_mask,
                            max_words=length,stopwords=stop_words,
@@ -156,7 +156,7 @@ class GotLib(emotions):
             txt = re.sub("'s|'ve|'re|'t|'ll","",txt)
             new_words = tokenizer.tokenize(txt)
             stop_words_v1 = ['s','ve','ll','m','re','t','d','a','i','l','know','could']
-            stop_words = set(stopwords.words("english"))
+            stop_words = set(self.e.stopWords())
             new_words = [i.strip() for i in new_words if i.strip() not in stop_words and i.strip() not in stop_words_v1]
 
             return new_words

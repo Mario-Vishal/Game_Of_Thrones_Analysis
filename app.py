@@ -253,7 +253,7 @@ bar5.plot()
 #----------------------Module 6----------------------------------
 
 title('Similar Characters',60,'white')
-st.write('The chart shows characters who are similar to a character with their similariyt precentage, based on their similar of usage of words this same alogrithm is also used in movie recommender systems.')
+st.write('The chart shows characters who are similar to a character with their similarity precentage, based on their similar of usage of words this same alogrithm is also used in movie recommender systems.')
 st.write('Note: This is very much experimental and purely based on the scripts. And only depends on script text and nothing else.')
 ch=characters[:]
 ch1 = select_box(ch)
@@ -289,8 +289,9 @@ st.write('')
 
 
 st.markdown('<h3 style="text-align:center;">Made By <span style="color:#4f9bce;font-weight:bolder;font-size:40px;">Mario 😎</span></h3>',unsafe_allow_html=True)
-st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a href="https://github.com/Mario-Vishal">GitHub</a></h2>',unsafe_allow_html=True)
-
+st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a style="text-decoration:none;color:rgb(96, 235, 133);" href="https://github.com/Mario-Vishal">-> GitHub <-</a></h2>',unsafe_allow_html=True)
+st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a style="text-decoration:none;color:rgb(20, 166, 219);" href="www.linkedin.com/in/mario-vishal">-> Linkedin <-</a></h2>',unsafe_allow_html=True)
+st.markdown('<h2 style="text-align:center;text-decoration:none;font-weight:bolder;"><a style="text-decoration:none;color:red;" href="mailto:mariovishal12@gmail.com">-> Contact Me <-</a></h2>',unsafe_allow_html=True)
 
 
 
