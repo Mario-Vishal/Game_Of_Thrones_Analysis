@@ -1,6 +1,5 @@
 streamlit
 matplotlib
-pyplot
 sklearn
 wordcloud
 numpy
