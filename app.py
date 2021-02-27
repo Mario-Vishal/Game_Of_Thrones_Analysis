@@ -253,7 +253,7 @@ bar5.plot()
 #----------------------Module 6----------------------------------
 
 title('Similar Characters',60,'white')
-st.write('The chart shows the similar characters of a character, based on their similarity of usage of words this same alogrithm is also used in movie recommender systems')
+st.write('The chart shows characters who are similar to a character with their similariyt precentage, based on their similar of usage of words this same alogrithm is also used in movie recommender systems.')
 st.write('Note: This is very much experimental and purely based on the scripts. And only depends on script text and nothing else.')
 ch=characters[:]
 ch1 = select_box(ch)

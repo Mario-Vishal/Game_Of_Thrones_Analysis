@@ -49,8 +49,9 @@ class GotLib(emotions):
             throne_mask = ImageOps.grayscale(throne_mask)
             throne_mask = np.array(throne_mask)
             txt = self.get_text_of_character(character)
+            stop_words_v1 = ['s','ve','ll','m','re','t','d','a','i','l','know','could','would']
 
-            stop_words=set(stopwords.words("english"))
+            stop_words=list(set(stopwords.words("english")))+stop_words_v1
 
             wc = WordCloud(background_color="black",mask=throne_mask,
                            max_words=length,stopwords=stop_words,
@@ -154,7 +155,7 @@ class GotLib(emotions):
             tokenizer = RegexpTokenizer(r"\w+")
             txt = re.sub("'s|'ve|'re|'t|'ll","",txt)
             new_words = tokenizer.tokenize(txt)
-            stop_words_v1 = ['s','ve','ll','m','re','t','d','a','i','l']
+            stop_words_v1 = ['s','ve','ll','m','re','t','d','a','i','l','know','could']
             stop_words = set(stopwords.words("english"))
             new_words = [i.strip() for i in new_words if i.strip() not in stop_words and i.strip() not in stop_words_v1]
 
