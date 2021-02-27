@@ -6,4 +6,3 @@ wordcloud
 numpy
 pandas
 nltk
-nltk.txt
