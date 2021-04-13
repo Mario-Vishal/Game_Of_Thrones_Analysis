@@ -6,7 +6,7 @@ Basically it is an interactive dashboard which a user can play with.
 
 website : https://got-streamlit.herokuapp.com/
 
-## Tech Used 
+## Requirements 
 
 - streamlit : a python framework to make easy data science or machine learning websites.
 - python
