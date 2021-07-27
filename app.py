@@ -98,7 +98,7 @@ with open("styles/style.css") as f:
 
 #-------------------------------Header-----------------------
 
-st.markdown('<h1 style="text-align:center;color:white;font-weight:bolder;font-size:100px;background: -webkit-linear-gradient(#e20b0b,#ec720e,#46a3e0,#093ff0); -webkit-background-clip: text;-webkit-text-fill-color: transparent;">GAME<br>OF<br>THRONES</h1>',unsafe_allow_html=True)
+st.markdown('<h1 style="text-align:center;color:white;font-weight:bolder;font-size:100px;background: -webkit-linear-gradient(#e20b0b,#ec720e,#46a3e0,#093ff0);">GAME<br>OF<br>THRONES</h1>',unsafe_allow_html=True)
 # st.markdown('<h1 style="text-align:center;color:white;background-image:url("m1.png");">An analysis..</h1>',unsafe_allow_html=True)
 st.markdown('<h2 style="text-align:center;color:white;">An analysis..</h2>',unsafe_allow_html=True)
 st.image('images/got1.jpg',width=700)
