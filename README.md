@@ -4,7 +4,7 @@ This is an analysis based project on the series called Game of Thrones. The data
 
 Basically it is an interactive dashboard which a user can play with.
 
-website : https://got-streamlit.herokuapp.com/
+website : https://share.streamlit.io/mario-vishal/game_of_thrones_analysis/app.py#gameofthrones
 
 ## Requirements 
 
