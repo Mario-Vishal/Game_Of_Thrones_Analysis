@@ -163,7 +163,7 @@ bar0.plot()
 
 #----------------------Module 4----------------------------------
 
-title("Percentage of a character's performance in seasons",60,"white")
+title("Percentage distribution of a character's performance in seasons",60,"white")
 st.write("what is the character's distribution of his/her/(uhh. you know the rest) dialogue percentage over the seasons")
 
 stb2 = select_box(characters)
@@ -178,8 +178,8 @@ pie2.plot()
 
 #-------------------------Module 5-----------------------------
 
-title('Most number of words spoken by a character',60,'white')
-st.markdown('#### removing all the stop words in the sense common words.')
+title('Most spoken words by a character',60,'white')
+st.markdown('#### removing all the stop words aka common words.')
 
 
 
