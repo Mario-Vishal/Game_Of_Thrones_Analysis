@@ -10,6 +10,6 @@ website : https://share.streamlit.io/mario-vishal/game_of_thrones_analysis/app.p
 
 - streamlit : a python framework to make easy data science or machine learning websites.
 - python
-- libraries : numpy, pandas, matplotlib, pyplot, sklearn, nltk.
+- libraries : numpy, pandas, matplotlib, pyplot, sklearn, scikit-learn, nltk.
 - wordcloud : a stylised manner of displaying words.
 - heroku : a platform to deploy this website.
