@@ -1,6 +1,7 @@
 streamlit
 matplotlib
 plotly
+scikit-learn
 sklearn
 wordcloud
 numpy
